@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05070c">
+  <meta name="description" content="Интерактивный калькулятор финансовой модели MVP проекта Желание сквозь Вселенную.">
+  <title>Финансовая модель MVP | Желание сквозь Вселенную</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-noise" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="https://ivankorytnik.github.io/Jelanie/" aria-label="Открыть сайт проекта Желание сквозь Вселенную">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="21" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".35"/>
+            <path d="M11 30c6 9 18 12 28 6M18 31l17-17M16 24c7 0 13 3 17 8-5 5-11 7-17 7-3-5-3-10 0-15Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="38" cy="11" r="2.5" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>ЖЕЛАНИЕ</strong>
+          <span>СКВОЗЬ ВСЕЛЕННУЮ</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Навигация калькулятора">
+        <a href="#inputs">Вводные</a>
+        <a href="#results">Показатели</a>
+        <a href="#charts">Графики</a>
+        <a href="#forecast">Расчет по месяцам</a>
+      </nav>
+
+      <a class="button button-small button-ghost header-back" href="https://ivankorytnik.github.io/Jelanie/">На сайт проекта</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="finance-hero">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> INTENTRA SPACE / FINMODEL MVP 1.0</div>
+          <h1>Калькулятор<br>финансовой модели</h1>
+          <p>Меняйте средний чек, расходы и план заказов. Выручка, прибыль, кассовый разрыв, окупаемость и ROI пересчитываются сразу.</p>
+        </div>
+
+        <div class="scenario-panel" aria-label="Быстрые сценарии">
+          <span class="scenario-label">Быстрый сценарий</span>
+          <div class="scenario-buttons" role="group" aria-label="Выбор сценария">
+            <button type="button" class="scenario-button" data-scenario="conservative">Консервативный</button>
+            <button type="button" class="scenario-button active" data-scenario="base">Базовый</button>
+            <button type="button" class="scenario-button" data-scenario="growth">Рост</button>
+          </div>
+          <p>После выбора сценария любую цифру можно изменить вручную.</p>
+        </div>
+
+        <div class="model-summary" id="model-summary" aria-live="polite">
+          <span class="summary-status" aria-hidden="true"></span>
+          <p id="summary-text">Расчет модели...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="inputs">
+      <div class="container">
+        <div class="section-heading heading-row">
+          <div>
+            <span class="section-kicker">01 / Вводные</span>
+            <h2>Что можно менять</h2>
+            <p>Базовые значения перенесены из текущей финансовой модели на 12 месяцев.</p>
+          </div>
+          <div class="autosave"><span></span> Изменения сохраняются в браузере</div>
+        </div>
+
+        <div class="inputs-grid">
+          <article class="input-card">
+            <div class="card-title">
+              <span>01</span>
+              <div><h3>Экономика заказа</h3><p>Цена и переменные расходы</p></div>
+            </div>
+
+            <label class="model-field">
+              <span><b>Средний чек</b><small>Рублей за один заказ</small></span>
+              <span class="input-shell"><input type="number" min="0" step="100" inputmode="decimal" data-model="price"><i>₽</i></span>
+            </label>
+
+            <label class="model-field">
+              <span><b>Доля РТ-64</b><small>Процент от выручки</small></span>
+              <span class="input-shell"><input type="number" min="0" max="100" step="0.1" inputmode="decimal" data-model="rtShare"><i>%</i></span>
+            </label>
+
+            <label class="model-field">
+              <span><b>Маркетинг</b><small>Процент от выручки</small></span>
+              <span class="input-shell"><input type="number" min="0" max="100" step="0.1" inputmode="decimal" data-model="marketingShare"><i>%</i></span>
+            </label>
+
+            <label class="model-field">
+              <span><b>Эквайринг</b><small>Процент от выручки</small></span>
+              <span class="input-shell"><input type="number" min="0" max="100" step="0.1" inputmode="decimal" data-model="acquiringShare"><i>%</i></span>
+            </label>
+
+            <label class="model-field">
+              <span><b>ИТ, сертификат, поддержка</b><small>Рублей на один заказ</small></span>
+              <span class="input-shell"><input type="number" min="0" step="50" inputmode="decimal" data-model="serviceCost"><i>₽</i></span>
+            </label>
+          </article>
+
+          <article class="input-card">
+            <div class="card-title">
+              <span>02</span>
+              <div><h3>Расходы проекта</h3><p>Постоянные и стартовые затраты</p></div>
+            </div>
+
+            <label class="model-field large-field">
+              <span><b>Постоянные расходы</b><small>Команда, сервисы, операционные затраты</small></span>
+              <span class="input-shell"><input type="number" min="0" step="50000" inputmode="decimal" data-model="fixedCosts"><i>₽/мес.</i></span>
+            </label>
+
+            <label class="model-field large-field">
+              <span><b>Стартовые инвестиции</b><small>Запуск платформы, оборудование, пилот</small></span>
+              <span class="input-shell"><input type="number" min="0" step="100000" inputmode="decimal" data-model="startupInvestment"><i>₽</i></span>
+            </label>
+
+            <div class="cost-preview" id="variable-preview-card">
+              <span>Переменные расходы на заказ</span>
+              <strong id="preview-variable-cost">0 ₽</strong>
+              <small id="preview-variable-share">0% от среднего чека</small>
+            </div>
+
+            <div class="cost-preview accent" id="contribution-preview-card">
+              <span>Маржинальный доход с заказа</span>
+              <strong id="preview-contribution">0 ₽</strong>
+              <small id="preview-contribution-share">0% маржинальность</small>
+            </div>
+          </article>
+
+          <article class="input-card input-card-guide">
+            <div class="card-title">
+              <span>03</span>
+              <div><h3>Управление моделью</h3><p>Сценарии и действия</p></div>
+            </div>
+
+            <div class="guide-list">
+              <div><span>1</span><p><b>Выберите сценарий</b><small>Получите готовый набор исходных данных</small></p></div>
+              <div><span>2</span><p><b>Измените вводные</b><small>Результат обновится без кнопки расчета</small></p></div>
+              <div><span>3</span><p><b>Настройте продажи</b><small>Каждый месяц редактируется отдельно</small></p></div>
+              <div><span>4</span><p><b>Скачайте расчет</b><small>CSV откроется в Excel или Google Sheets</small></p></div>
+            </div>
+
+            <div class="action-stack">
+              <button class="button button-gradient" type="button" id="export-csv">Скачать расчет CSV</button>
+              <button class="button button-ghost" type="button" id="print-model">Печать / PDF</button>
+              <button class="text-button" type="button" id="reset-model">Вернуть базовые значения</button>
+            </div>
+          </article>
+        </div>
+
+        <article class="sales-plan-card">
+          <div class="sales-plan-head">
+            <div>
+              <span class="section-kicker">План продаж</span>
+              <h3>Заказы по месяцам</h3>
+              <p>Введите ожидаемое количество оплаченных заказов. Допускается ноль.</p>
+            </div>
+            <div class="plan-total"><span>Всего за 12 месяцев</span><strong id="orders-total">0</strong><small>заказов</small></div>
+          </div>
+
+          <div class="months-grid" id="months-grid">
+            <label class="month-field"><span>М1</span><input type="number" min="0" step="10" inputmode="numeric" data-month="0"><i></i></label>
+            <label class="month-field"><span>М2</span><input type="number" min="0" step="10" inputmode="numeric" data-month="1"><i></i></label>
+            <label class="month-field"><span>М3</span><input type="number" min="0" step="10" inputmode="numeric" data-month="2"><i></i></label>
+            <label class="month-field"><span>М4</span><input type="number" min="0" step="10" inputmode="numeric" data-month="3"><i></i></label>
+            <label class="month-field"><span>М5</span><input type="number" min="0" step="10" inputmode="numeric" data-month="4"><i></i></label>
+            <label class="month-field"><span>М6</span><input type="number" min="0" step="10" inputmode="numeric" data-month="5"><i></i></label>
+            <label class="month-field"><span>М7</span><input type="number" min="0" step="10" inputmode="numeric" data-month="6"><i></i></label>
+            <label class="month-field"><span>М8</span><input type="number" min="0" step="10" inputmode="numeric" data-month="7"><i></i></label>
+            <label class="month-field"><span>М9</span><input type="number" min="0" step="10" inputmode="numeric" data-month="8"><i></i></label>
+            <label class="month-field"><span>М10</span><input type="number" min="0" step="10" inputmode="numeric" data-month="9"><i></i></label>
+            <label class="month-field"><span>М11</span><input type="number" min="0" step="10" inputmode="numeric" data-month="10"><i></i></label>
+            <label class="month-field"><span>М12</span><input type="number" min="0" step="10" inputmode="numeric" data-month="11"><i></i></label>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="results">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">02 / Результат</span>
+          <h2>Ключевые показатели MVP</h2>
+          <p>Показатели рассчитаны на 12 месяцев. Стартовые инвестиции учитываются в накопленном денежном потоке.</p>
+        </div>
+
+        <div class="model-warning" id="model-warning" hidden></div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card primary" data-kpi-card="revenue"><span>Выручка за год</span><strong id="kpi-revenue">0 ₽</strong><small id="kpi-revenue-note">0 заказов</small></article>
+          <article class="kpi-card" data-kpi-card="operating"><span>Операционная прибыль</span><strong id="kpi-operating-profit">0 ₽</strong><small id="kpi-operating-note">До стартовых инвестиций</small></article>
+          <article class="kpi-card" data-kpi-card="funding"><span>Требуемое финансирование</span><strong id="kpi-funding">0 ₽</strong><small>Максимальный кассовый разрыв</small></article>
+          <article class="kpi-card" data-kpi-card="payback"><span>Окупаемость</span><strong id="kpi-payback">-</strong><small id="kpi-payback-note">По накопленному потоку</small></article>
+          <article class="kpi-card" data-kpi-card="cash"><span>Денежный результат</span><strong id="kpi-cash-result">0 ₽</strong><small>После стартовых инвестиций</small></article>
+          <article class="kpi-card" data-kpi-card="rt"><span>Доход РТ-64</span><strong id="kpi-rt-income">0 ₽</strong><small>За 12 месяцев</small></article>
+          <article class="kpi-card" data-kpi-card="margin"><span>Операционная рентабельность</span><strong id="kpi-operating-margin">0%</strong><small>Прибыль / выручка</small></article>
+          <article class="kpi-card" data-kpi-card="roi"><span>ROI на финансирование</span><strong id="kpi-roi">0%</strong><small>Денежный результат / финансирование</small></article>
+        </div>
+
+        <div class="unit-grid">
+          <article><span>Средний чек</span><strong id="unit-price">0 ₽</strong></article>
+          <article><span>Переменные расходы</span><strong id="unit-variable">0 ₽</strong></article>
+          <article><span>Маржинальный доход</span><strong id="unit-contribution">0 ₽</strong></article>
+          <article><span>Маржинальность</span><strong id="unit-margin">0%</strong></article>
+          <article><span>Безубыточность</span><strong id="unit-break-even">0 заказов</strong></article>
+          <article><span>Выручка безубыточности</span><strong id="unit-break-even-revenue">0 ₽</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="charts">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">03 / Динамика</span>
+          <h2>Как меняется экономика</h2>
+          <p>Графики обновляются после каждого изменения вводных или плана заказов.</p>
+        </div>
+
+        <div class="charts-grid">
+          <article class="chart-card chart-card-wide">
+            <div class="chart-head">
+              <div><h3>Выручка, расходы и прибыль</h3><p>Финансовый результат каждого месяца</p></div>
+              <div class="legend"><span class="legend-revenue">Выручка</span><span class="legend-expenses">Расходы</span><span class="legend-profit">Прибыль</span></div>
+            </div>
+            <div class="canvas-wrap"><canvas id="monthly-chart" aria-label="График выручки, расходов и прибыли по месяцам"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-head">
+              <div><h3>Накопленный денежный поток</h3><p>С учетом стартовых инвестиций</p></div>
+            </div>
+            <div class="canvas-wrap canvas-wrap-cash"><canvas id="cash-chart" aria-label="График накопленного денежного потока"></canvas></div>
+            <div class="cash-facts">
+              <div><span>Минимум</span><strong id="cash-min">0 ₽</strong></div>
+              <div><span>На конец года</span><strong id="cash-end">0 ₽</strong></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="forecast">
+      <div class="container">
+        <div class="section-heading heading-row">
+          <div>
+            <span class="section-kicker">04 / Детальный расчет</span>
+            <h2>Финмодель по месяцам</h2>
+            <p>Таблица показывает, из чего складывается итоговый денежный поток.</p>
+          </div>
+          <button class="button button-outline" type="button" id="export-csv-secondary">Скачать CSV</button>
+        </div>
+
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Период</th>
+                <th>Заказы</th>
+                <th>Выручка</th>
+                <th>РТ-64</th>
+                <th>Маркетинг</th>
+                <th>Эквайринг</th>
+                <th>ИТ и сопровождение</th>
+                <th>Все расходы</th>
+                <th>Опер. прибыль</th>
+                <th>Накопленный поток</th>
+              </tr>
+            </thead>
+            <tbody id="forecast-body"></tbody>
+            <tfoot id="forecast-foot"></tfoot>
+          </table>
+        </div>
+
+        <details class="methodology">
+          <summary>Как считается модель</summary>
+          <div>
+            <p><b>Маржинальный доход с заказа</b> = средний чек минус доля РТ-64, маркетинг, эквайринг, ИТ и сопровождение.</p>
+            <p><b>Операционная прибыль</b> = маржинальный доход всех заказов минус постоянные расходы месяца.</p>
+            <p><b>Требуемое финансирование</b> = максимальный отрицательный накопленный денежный поток с учетом стартовых инвестиций.</p>
+            <p><b>Окупаемость</b> = первый месяц, в котором накопленный денежный поток становится неотрицательным.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="https://ivankorytnik.github.io/Jelanie/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="21" fill="none" stroke="currentColor" opacity=".35"/><path d="M11 30c6 9 18 12 28 6M18 31l17-17M16 24c7 0 13 3 17 8-5 5-11 7-17 7-3-5-3-10 0-15Z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="38" cy="11" r="2.5" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-copy"><strong>ЖЕЛАНИЕ</strong><span>СКВОЗЬ ВСЕЛЕННУЮ</span></span>
+      </a>
+      <div class="footer-meta"><span>INTENTRA SPACE</span><span>FINMODEL MVP 1.0</span><span>Расчет носит модельный характер</span></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
