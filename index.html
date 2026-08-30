@@ -17,29 +17,17 @@
       </div>
       <div class="topbar__actions">
         <button class="btn btn--ghost" id="resetModel" type="button">Сбросить</button>
-        <button class="btn btn--primary" id="exportCsv" type="button">Скачать CSV</button>
+        <button class="btn btn--primary" id="exportExcel" type="button">Excel</button>
+        <button class="btn btn--ghost" id="exportWord" type="button">Word</button>
+        <button class="btn btn--ghost" id="exportPdf" type="button">PDF</button>
       </div>
     </div>
   </header>
 
   <main class="layout">
     <aside class="panel panel--inputs">
-      <div class="panel__head">
-        <h1>Исходные данные</h1>
-        <p>Меняйте ключевые вводные, план заказов и статьи расходов. Результат обновляется сразу.</p>
-      </div>
-
-      <section class="block">
-        <div class="block__title-row">
-          <h2>Быстрые сценарии</h2>
-          <div class="segmented" role="group" aria-label="Сценарии">
-            <button class="segmented__btn" data-scenario="conservative" type="button">Консервативный</button>
-            <button class="segmented__btn is-active" data-scenario="base" type="button">Базовый</button>
-            <button class="segmented__btn" data-scenario="growth" type="button">Рост</button>
-          </div>
-        </div>
-      </section>
-
+      <div class="panel__head"><h1>Исходные данные</h1><p>Меняйте ключевые вводные, план заказов и статьи расходов. Результат обновляется сразу.</p></div>
+      <section class="block"><div class="block__title-row"><h2>Быстрые сценарии</h2><div class="segmented" role="group" aria-label="Сценарии"><button class="segmented__btn" data-scenario="conservative" type="button">Консервативный</button><button class="segmented__btn is-active" data-scenario="base" type="button">Базовый</button><button class="segmented__btn" data-scenario="growth" type="button">Рост</button></div></div></section>
       <details class="block" open><summary>1. Коммерческие параметры</summary><div class="fields" id="commercialFields"></div></details>
       <details class="block" open><summary>2. Налоги и нормативы</summary><div class="fields" id="taxFields"></div></details>
       <details class="block" open><summary>3. Консьерж и офис</summary><div class="fields" id="operationsFields"></div></details>
@@ -50,14 +38,7 @@
     </aside>
 
     <section class="dashboard">
-      <div class="dashboard__intro panel">
-        <div>
-          <h2>Показатели</h2>
-          <p>Фокус на калькуляторе, вводных данных и графиках. Без лишней шапки и лишнего текста.</p>
-        </div>
-        <div class="note" id="modelNote">Расчет выполнен по обновленному Excel-файлу.</div>
-      </div>
-
+      <div class="dashboard__intro panel"><div><h2>Показатели</h2><p>Фокус на калькуляторе, вводных данных и графиках. Без лишней шапки и лишнего текста.</p></div><div class="note" id="modelNote">Расчет выполнен по обновленному Excel-файлу.</div></div>
       <div class="kpi-grid">
         <article class="kpi kpi--accent"><span>Платежи клиентов за год</span><strong id="kpiRevenue">0 ₽</strong><small id="kpiOrders">0 заказов</small></article>
         <article class="kpi"><span>Операционная прибыль</span><strong id="kpiOperating">0 ₽</strong><small>До УСН за 12 месяцев</small></article>
@@ -72,35 +53,14 @@
         <article class="kpi"><span>Операционная рентабельность</span><strong id="kpiMargin">0%</strong><small>Опер. прибыль / выручка без НДС</small></article>
         <article class="kpi"><span>Макс. точка безубыточности</span><strong id="kpiBreakeven">0</strong><small>Заказов в месяц</small></article>
       </div>
-
       <div class="charts-grid">
-        <article class="panel chart-panel">
-          <div class="chart-panel__head"><div><h3>Выручка, расходы и операционная прибыль</h3><p>Помесячный срез</p></div><div class="legend"><span class="legend__item"><i class="swatch swatch--revenue"></i>Выручка без НДС</span><span class="legend__item"><i class="swatch swatch--expenses"></i>Постоянные расходы</span><span class="legend__item"><i class="swatch swatch--profit"></i>Опер. прибыль</span></div></div>
-          <canvas id="barChart" height="320"></canvas>
-        </article>
-        <article class="panel chart-panel">
-          <div class="chart-panel__head"><div><h3>Накопленный денежный поток</h3><p>После УСН и CAPEX</p></div><div class="mini-metrics"><div><span>Минимум</span><strong id="cashMin">0 ₽</strong></div><div><span>Конец года</span><strong id="cashEnd">0 ₽</strong></div></div></div>
-          <canvas id="lineChart" height="320"></canvas>
-        </article>
+        <article class="panel chart-panel"><div class="chart-panel__head"><div><h3>Выручка, расходы и операционная прибыль</h3><p>Помесячный срез</p></div><div class="legend"><span class="legend__item"><i class="swatch swatch--revenue"></i>Выручка без НДС</span><span class="legend__item"><i class="swatch swatch--expenses"></i>Постоянные расходы</span><span class="legend__item"><i class="swatch swatch--profit"></i>Опер. прибыль</span></div></div><canvas id="barChart" height="320"></canvas></article>
+        <article class="panel chart-panel"><div class="chart-panel__head"><div><h3>Накопленный денежный поток</h3><p>После УСН и CAPEX</p></div><div class="mini-metrics"><div><span>Минимум</span><strong id="cashMin">0 ₽</strong></div><div><span>Конец года</span><strong id="cashEnd">0 ₽</strong></div></div></div><canvas id="lineChart" height="320"></canvas></article>
       </div>
-
-      <div class="info-grid">
-        <article class="panel compact-card"><h3>Юнит-экономика</h3><div class="compact-list"><div><span>Цена услуги</span><strong id="unitPrice">0 ₽</strong></div><div><span>Выручка без НДС на заказ</span><strong id="unitNetRevenue">0 ₽</strong></div><div><span>Переменные расходы на заказ</span><strong id="unitVariable">0 ₽</strong></div><div><span>Маржинальный доход на заказ</span><strong id="unitContribution">0 ₽</strong></div><div><span>Емкость 1 консьержа</span><strong id="unitCapacity">0</strong></div></div></article>
-        <article class="panel compact-card"><h3>Структура стартового CAPEX</h3><div class="compact-list" id="startupCapexList"></div></article>
-      </div>
-
-      <article class="panel table-panel">
-        <div class="table-panel__head"><h3>Помесячная финмодель</h3><p>Главные строки, как в Excel, но в компактном виде.</p></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Месяц</th><th>Заказы</th><th>НДС</th><th>Выручка без НДС</th><th>Переменные расходы</th><th>Постоянные расходы</th><th>Опер. прибыль</th><th>УСН</th><th>CAPEX</th><th>Чистый поток</th><th>Накопленный поток</th></tr></thead>
-            <tbody id="forecastBody"></tbody>
-          </table>
-        </div>
-      </article>
+      <div class="info-grid"><article class="panel compact-card"><h3>Юнит-экономика</h3><div class="compact-list"><div><span>Цена услуги</span><strong id="unitPrice">0 ₽</strong></div><div><span>Выручка без НДС на заказ</span><strong id="unitNetRevenue">0 ₽</strong></div><div><span>Переменные расходы на заказ</span><strong id="unitVariable">0 ₽</strong></div><div><span>Маржинальный доход на заказ</span><strong id="unitContribution">0 ₽</strong></div><div><span>Емкость 1 консьержа</span><strong id="unitCapacity">0</strong></div></div></article><article class="panel compact-card"><h3>Структура стартового CAPEX</h3><div class="compact-list" id="startupCapexList"></div></article></div>
+      <article class="panel table-panel"><div class="table-panel__head"><h3>Помесячная финмодель</h3><p>Главные строки, как в Excel, но в компактном виде.</p></div><div class="table-wrap"><table><thead><tr><th>Месяц</th><th>Заказы</th><th>НДС</th><th>Выручка без НДС</th><th>Переменные расходы</th><th>Постоянные расходы</th><th>Опер. прибыль</th><th>УСН</th><th>CAPEX</th><th>Чистый поток</th><th>Накопленный поток</th></tr></thead><tbody id="forecastBody"></tbody></table></div></article>
     </section>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
